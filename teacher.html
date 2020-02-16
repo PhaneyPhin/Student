@@ -1,0 +1,174 @@
+ <!-- Content Header (Page header) -->
+ <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>DataTables</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">DataTables</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">    <button type="button" class="btn btn-block btn-primary"  data-toggle="modal" data-target="#modal-default">Add Student</button></h3>
+          </div>
+          <!-- /.card-header -->
+         
+          <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <th>Teacher ID</th>
+                <th>Teacher Name</th>
+                <th>Card ID</th>
+                <th>Grade</th>
+                <th>Address</th>
+              </tr>
+              </thead>
+              
+              <tfoot>
+              <tr>
+                <th>Rendering engine</th>
+                <th>Browser</th>
+                <th>Platform(s)</th>
+                <th>Engine version</th>
+                <th>CSS</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <script src="plugins/datatables/jquery.dataTables.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+     <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">เพิ่มนักเรียน</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+          <div class="modal-body">
+        
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1"> รหัสนักเรียน</label>
+                        <input type="text" id="student_id" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">ชื่อนักเรียน</label>
+                        <input type="text" id="first_name" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">สกุลนักเรียน</label>
+                        <input type="text" id="last_name" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">เลขประจำตัวประชาชน
+                        </label>
+                        <input type="card_id" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label>วัน/เดือน/ปี เกิด:</label>
+      
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                          </div>
+                          <input type="text" id="datemask" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                        </div>
+                        <!-- /.input group -->
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <style>
+
+      .modal-dialog{
+        max-width: 1000px;
+      }
+    </style>
+    <script>
+
+      $(function () {
+        
+          // $('#example2').DataTable({
+          //   "paging": true,
+          //   "lengthChange": false,
+          //   "searching": false,
+          //   "ordering": true,
+          //   "info": true,
+          //   "autoWidth": false,
+          // });
+          $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        });
+      </script>
