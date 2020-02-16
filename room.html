@@ -1,0 +1,149 @@
+ <!-- Content Header (Page header) -->
+ <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>ห้องเรียน</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">หน้าแรก</a></li>
+            <li class="breadcrumb-item active">ห้องเรียน</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">    <button type="button" class="btn btn-block btn-primary"  data-toggle="modal" data-target="#modal-default">เพิ่มห้องเรียน</button></h3>
+          </div>
+          <!-- /.card-header -->
+         
+          <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <th>ลำดับ</th>
+                <th>รหัสห้องเรียน</th>
+                <th>ชื่อห้องเรียน</th>
+                <th>เครื่องมือ</th>
+              </tr>
+              </thead>
+
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <script src="plugins/datatables/jquery.dataTables.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+     <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">เพิ่มห้องเรียน</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+          <div class="modal-body">
+        
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" id="quickForm">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1"> รหัสห้องเรียน :</label>
+                        <label style="color: red;">*</label>
+                        <input type="text" id="room_id" name="room_id" class="form-control" id="exampleInputEmail1" placeholder="ระบุรหัสห้องเรียน">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-9 col-lg-9">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">ชื่อห้องเรียน :</label>
+                        <label style="color: red;">*</label>
+                        <input type="text" id="room_number" name="room_number" class="form-control" id="exampleInputEmail1" placeholder="ระบุชื่อห้องเรียน">
+                      </div>
+                    </div>
+                  </div>
+            
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-primary" id="btn-clear" style="border-color: #ff0909; background-color: white; color: #ff0909; ">Clear</button>
+                </div>
+              </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <style>
+      .modal-dialog{
+        max-width: 1000px;
+      }
+      .card-footer{
+        float: right;
+      }
+      .modal-header{
+        border-bottom: 1px solid #c1c4c7;
+      }
+    </style>
+
+<script>
+    $(function () {
+      $.validator.setDefaults({
+        submitHandler: function () {
+          alert("Form successful suubmitted!");
+        }
+      })
+      $('#quickForm').validate({
+        rules: {
+            room_id :{
+                required: true
+            },
+            room_number: {
+                required: true
+            },
+        },
+        messages: {
+         room_id:{
+            required: "กรุณาระบุรหัสห้องเรียน"
+         },
+         room_number:{
+             required: "กรุณาระบุชื่อห้องเรียน"
+         },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+        }
+      })
+    })
+  </script>
