@@ -23,19 +23,20 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"> <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
-              data-target="#modal-default">เพิ่มวิชา</button></h3>
+              id="add-subject-btn">เพิ่มวิชา</button></h3>
         </div>
         <!-- /.card-header -->
 
         <div class="card-body">
-          <table id="example2" class="table table-bordered table-hover">
+          <table id="subject-table" class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th>ลำดับ</th>
                 <th>รหัสวิชา</th>
                 <th>ชื่อวิชา</th>
                 <th>หน่วยกิต</th>
-                <th>เครื่องมือ</th>
+                <th>แก้ไข</th>
+                <th>ลบ</th>
               </tr>
             </thead>
 
@@ -98,7 +99,7 @@
 
             <!-- /.card-body -->
 
-            <div class="card-footer">
+            <div class="my-footer">
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="reset" class="btn btn-primary" id="btn-clear"
                 style="border-color: #ff0909; background-color: white; color: #ff0909; ">Clear</button>
@@ -125,9 +126,151 @@
 </style>
 <script>
   $(function () {
+    $('#add-subject-btn').click(function () {
+
+      $("#sub_id").val('');
+      $('#sub_name').val('');
+      $('#credit').val('');
+      $('#sub_id').prop("disabled", false);
+      $('#modal-default').modal('show');
+      $('.modal-title').html("เพิ่มข้อมูลวิชา");
+    });
+    var table = $('#subject-table').DataTable({
+      "ajax": {
+        "url": "/adminLTE/service/subject.php?type=1",
+        "dataSrc": "data"
+      },
+      "columns": [
+
+        { "data": "sub_id" },
+        { "data": "sub_id" },
+        { "data": "sub_name" },
+        { "data": "credit" },
+        { "data": "sub_id" },
+        { "data": "sub_id" }
+      ],
+      "columnDefs": [
+        {
+          width: '20%',
+          targets: 0,
+            "searchable": false,
+            "orderable": false,
+        },
+        {
+          width: '20%',
+
+          "targets": 1
+        },
+        {
+          width: '20%',
+          targets: 2
+        },
+        {
+          width: '20%',
+          targets: 3
+        },
+        {
+          width: '20%',
+          render: function (data, type, row) {
+            return `<button class="btn btn-warning edit-btn" data-id='` + row['sub_id'] + `' data-sub_name='` + row['sub_name'] + `' data-credit='` + row['credit'] + `'>แก้ไข</button>`
+          },
+          targets: 4
+        }, {
+          width: '20%',
+          render: function (data, type, row) {
+            return `<button class="btn btn-danger delete-btn"  data-id='` + row['sub_id'] + `'>ลบ</button>`
+          },
+          targets: 5
+        }
+      ],
+      drawCallback: function (settings) {
+        $('.edit-btn').click(function () {
+          var sub_id = $(this).data('id');
+          var sub_name = $(this).data('sub_name');
+          var credit = $(this).data('credit');
+          $('#sub_id').prop("disabled", true);
+          $('#modal-default').modal('show');
+
+          // postData("service/subject.php?type=5",{sub_id:sub_id}).done(result=>{
+          //   setStudentValue(result.data[0]);
+          // })
+          $("#sub_id").val(sub_id);
+          $('#sub_name').val(sub_name);
+          $('#credit').val(credit);
+          $('.modal-title').html("แก้ไขข้อมูลวิชา");
+          $('#sub_id').prop("disabled", true);
+
+        })
+        $('.delete-btn').click(function () {
+          var sub_id = $(this).data('id');
+          Swal.fire({
+            title: 'คุณต้องการลบข้อมูลนี้ใช่หรือไหม?',
+            text: "ข้อมูลที่ลบแล้วไม่สารถยอนกลับได้!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ลบ',
+            cancelButtonText: 'ยกเลิก'
+          }).then((result) => {
+            if (result.value) {
+              postData('service/subject.php?type=4', { sub_id: sub_id }).done((result) => {
+                if (result.code == 1) {
+                  Swal.fire(
+                    'ข้อมูลถูกลยเรียบร้อยแล้ว!',
+                    '',
+                    'success'
+                  )
+                  table.ajax.reload();
+                } else {
+                  Swal.fire(
+                    '',
+                    result.message,
+                    'error'
+                  )
+                }
+              })
+            }
+          })
+        })
+      }
+    });
+    table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
     $.validator.setDefaults({
       submitHandler: function () {
-        alert("Form successful suubmitted!");
+        var data = {
+          sub_id: $('#sub_id').val(),
+          sub_name: $('#sub_name').val(),
+          credit: $('#credit').val()
+        }
+        var type = 2;
+        if ($('#sub_id').attr('disabled')) {
+          type = 3;
+        }
+        postData('service/subject.php?type=' + type, (data)).done((result) => {
+          if (result.code == 1) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'ข้อมูลถูกบันทึกเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            table.ajax.reload();
+            $('#modal-default').modal('hide');
+          } else {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'error',
+              text: result.message
+            })
+          }
+        });
       }
     })
     $('#quickForm').validate({

@@ -27,13 +27,14 @@
           <!-- /.card-header -->
          
           <div class="card-body">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="room-table" class="table table-bordered table-hover">
               <thead>
               <tr>
                 <th>ลำดับ</th>
                 <th>รหัสห้องเรียน</th>
                 <th>ชื่อห้องเรียน</th>
-                <th>เครื่องมือ</th>
+                <th>แก้ไข</th>
+                <th>ลบ</th>
               </tr>
               </thead>
 
@@ -86,7 +87,7 @@
             
                 <!-- /.card-body -->
 
-                <div class="card-footer">
+                <div class="my-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
                   <button type="reset" class="btn btn-primary" id="btn-clear" style="border-color: #ff0909; background-color: white; color: #ff0909; ">Clear</button>
                 </div>
@@ -111,9 +112,37 @@
 
 <script>
     $(function () {
+     
       $.validator.setDefaults({
         submitHandler: function () {
-          alert("Form successful suubmitted!");
+          var data = {
+          room_id: $('#room_id').val(),
+          room_number: $('#room_number').val()
+        }
+        var type = 2;
+        if ($('#room_id').attr('disabled')) {
+          type = 3;
+        }
+        postData('service/room.php?type=' + type, (data)).done((result) => {
+          if (result.code == 1) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'ข้อมูลถูกบันทึกเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            table.ajax.reload();
+            $('#modal-default').modal('hide');
+          } else {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'error',
+              text: result.message
+            })
+          }
+        });
         }
       })
       $('#quickForm').validate({
@@ -144,6 +173,106 @@
         unhighlight: function (element, errorClass, validClass) {
           $(element).removeClass('is-invalid');
         }
-      })
+      });
+      var table = $('#room-table').DataTable({
+      "ajax": {
+        "url": "/adminLTE/service/room.php?type=1",
+        "dataSrc": "data"
+      },
+      "columns": [
+
+        { "data": "room_id" },
+        { "data": "room_id" },
+        { "data": "room_number" },
+        { "data": "room_id" },
+        { "data": "room_id" }
+      ],
+      "columnDefs": [
+        {
+          width: '20%',
+          targets: 0,
+            "searchable": false,
+            "orderable": false,
+        },
+        {
+          width: '20%',
+
+          "targets": 1
+        },
+        {
+          width: '20%',
+          targets: 2
+        },
+        {
+          width: '20%',
+          render: function (data, type, row) {
+            return `<button class="btn btn-warning edit-btn" data-id='` + row['room_id'] + `' data-room_number='` + row['room_number'] + `' >แก้ไข</button>`
+          },
+          targets: 3
+        }, {
+          width: '20%',
+          render: function (data, type, row) {
+            return `<button class="btn btn-danger delete-btn"  data-id='` + row['room_id'] + `'>ลบ</button>`
+          },
+          targets: 4
+        }
+      ],
+      drawCallback: function (settings) {
+        $('.edit-btn').click(function () {
+          var room_id = $(this).data('id');
+          var room_number = $(this).data('sub_name');
+         
+          $('#room_id').prop("disabled", true);
+          $('#modal-default').modal('show');
+
+          // postData("service/subject.php?type=5",{sub_id:sub_id}).done(result=>{
+          //   setStudentValue(result.data[0]);
+          // })
+          $("#room_id").val(sub_id);
+          $('#room_number').val(sub_name);
+          $('.modal-title').html("แก้ไขข้อมูลวิชา");
+          $('#sub_id').prop("disabled", true);
+
+        })
+        $('.delete-btn').click(function () {
+          var room_id = $(this).data('id');
+          Swal.fire({
+            title: 'คุณต้องการลบข้อมูลนี้ใช่หรือไหม?',
+            text: "ข้อมูลที่ลบแล้วไม่สารถยอนกลับได้!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ลบ',
+            cancelButtonText: 'ยกเลิก'
+          }).then((result) => {
+            if (result.value) {
+              postData('service/room.php?type=4', { room_id: room_id }).done((result) => {
+                if (result.code == 1) {
+                  Swal.fire(
+                    'ข้อมูลถูกลยเรียบร้อยแล้ว!',
+                    '',
+                    'success'
+                  )
+                  table.ajax.reload();
+                } else {
+                  Swal.fire(
+                    '',
+                    result.message,
+                    'error'
+                  )
+                }
+              })
+            }
+          })
+        })
+      }
+    });
+    table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+
     })
   </script>

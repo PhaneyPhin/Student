@@ -1,14 +1,18 @@
+<?php
+    $class_id=$_GET['class_id'];
+?>
+
  <!-- Content Header (Page header) -->
  <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Teacher</h1>
+          <h1>Student</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Teacher</li>
+            <li class="breadcrumb-item active">DataTables</li>
           </ol>
         </div>
       </div>
@@ -22,7 +26,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">    <button type="button" class="btn btn-block btn-primary"  id="addStudent">เพิ่มอาจารย์</button></h3>
+            <h3 class="card-title">    <button type="button" class="btn btn-block btn-primary"  id="addStudent">เพิ่มนักเรียน</button></h3>
           </div>
           <!-- /.card-header -->
          
@@ -30,10 +34,10 @@
             <table id="student-table" class="table table-bordered table-hover">
               <thead>
               <tr>
-                <th>รหัสอาจารย์</th>
+                <th>รหัสนักเรียน</th>
                 <th>ชื่อ-สกุล</th>
                 <th>เลขประจำตัวประชาชน</th>
-                <th>โครงสร้าง </th>
+                <th>ระดับชั้น </th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
                
@@ -59,7 +63,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">เพิ่มข้อมูลอาจารย์</h4>
+            <h4 class="modal-title">เพิ่มนักเรียน</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -69,25 +73,25 @@
               <form role="form" id="quickForm">
                 <div class="card-body">
                   <div class="card-header  mycard-header">
-                    <h3 class="card-title">ข้อมูลอาจารย์</h3>
+                    <h3 class="card-title">ข้อมูลนักเรียน</h3>
                   </div>
                   <div class="row" style="margin-top: 20px;">
                     <div class="col-sm-12 col-md-6 col-lg-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1"> รหัสอาจารย์</label>
-                        <input type="text" id="teacher_id" name="teacher_id" class="form-control" id="exampleInputEmail1" placeholder="ระบุรหัสอาจารย์">
+                        <label for="exampleInputEmail1"> รหัสนักเรียน</label>
+                        <input type="text" id="student_id" name="student_id" class="form-control" id="exampleInputEmail1" placeholder="ระบุรหัสนักเรียน">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-3 col-lg-3">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">ชื่ออาจารย์</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control" id="exampleInputEmail1" placeholder="ระบุชื่ออาจารย์">
+                        <label for="exampleInputEmail1">ชื่อนักเรียน</label>
+                        <input type="text" id="first_name" name="first_name" class="form-control" id="exampleInputEmail1" placeholder="ระบุชื่อนักเรียน">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-3 col-lg-3">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">สกุล</label>
-                        <input type="text" id="last_name" name="last_name" class="form-control" id="exampleInputEmail1" placeholder="ระบุสกุลอาจารย์">
+                        <label for="exampleInputEmail1">สกุลนักเรียน</label>
+                        <input type="text" id="last_name" name="last_name" class="form-control" id="exampleInputEmail1" placeholder="ระบุสกุลนักเรียน">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
@@ -124,22 +128,20 @@
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-3 col-lg-3">
-                        <div class="form-group">
-                          <label>โครงสร้าง  
-                          </label>
-                          <select class="form-control" style="width: 100%;" name="structure" id="structure" >
-                         
-                            <option>ผู้จัดการ</option>
-                            <option>ผู้อำนวยการ</option>
-                            <option>รองผู้อำนวยการ</option>
-                            <option>ฝ่ายวิชาการ</option>
-                            <option>ฝ่ายงบประมาณ</option>
-                            <option>ฝ่ายบริหารงานทั่วไป</option>
-                            <option>ฝ่ายบุคคล</option>
-                          </select>
-                        </div>
+                      <div class="form-group">
+                        <label>ระดับชั้น 
+                        </label>
+                        <select class="form-control" style="width: 100%;" name="grade" id="grade" >
+                          <option value="0"></option>
+                          <option value="1">ป.1</option>
+                          <option value="2">ป.2</option>
+                          <option value="3">ป.3</option>
+                          <option value="4">ป.4</option>
+                          <option value="5">ป.5</option>
+                          <option value="6">ป.6</option>
+                        </select>
                       </div>
-                    
+                    </div>
                     <div class="col-sm-6 col-md-3">
                       <label>รูปภาพ 
                       </label>
@@ -149,30 +151,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="forgrade">
-                            <label class="form-check-label">ครูประจำชั้น</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-3" id="grade-panel">
-                        <div class="form-group">
-                          <label>ระดับชั้น 
-                          </label>
-                          <select class="form-control" style="width: 100%;" name="grade" id="grade" >
-                            <option value="0"></option>
-                            <option value="1">ป.1</option>
-                            <option value="2">ป.2</option>
-                            <option value="3">ป.3</option>
-                            <option value="4">ป.4</option>
-                            <option value="5">ป.5</option>
-                            <option value="6">ป.6</option>
-                          </select>
-                        </div>
-                  </div>
-                  </div>
-                  <div class="card-header mycard-header" style="margin-top: 20px;">
+                  <div class="card-header mycard-header">
                     <h3 class="card-title">ที่อยู่</h3>
                   </div>
                   <div class="row" style="margin-top: 20px;">
@@ -316,13 +295,13 @@
         }));
       }
       $(function () {
-        $('#grade-panel').hide();
+        $('')
         $('#addStudent').click(function(){
-          $('.modal-title').html('เพิ่มข้อมูลอาจารย์');
+          $('.modal-title').html('เพิ่มข้อมูลนักเรียน');
           $('#modal-default').modal('show');
-            $('#teacher_id').prop("disabled", false);
+            $('#student_id').prop("disabled", false);
             setStudentValue({
-              teacher_id: "",
+              student_id: "",
             first_name: "",
             last_name: "",
             card_id: "",
@@ -330,29 +309,28 @@
             address_no: "",
             address_part: "",
             admin_id: "",
-            grade: "0",
+            grade: "",
             image: "",
             religion: "",
             postcode: "",
             province: "",
             amphur: "",
-            tambon: "",
-            structure:""
+            tambon: ""
             })
         })
         var table=$('#student-table').DataTable( {
               "ajax": {
-                  "url": "/adminLTE/service/teacher.php?type=1",
+                  "url": "/adminLTE/service/student/student.php?type=1",
                   "dataSrc": "data"
               },
               "columns": [
       
-                { "data": "teacher_id" },
+                { "data": "student_id" },
                 { "data": "first_name" },
                 { "data": "card_id" },
-                { "data": "structure" },
-                { "data": "teacher_id"},
-                { "data": "teacher_id"}
+                { "data": "grade" },
+                { "data": "student_id"},
+                { "data": "student_id"}
                           ],
               "columnDefs": [
                 {
@@ -390,18 +368,18 @@
                ],
                drawCallback:function(settings){
                 $('.edit-btn').click(function(){
-                    var teacher_id=$(this).data('id');
-                    console.log(teacher_id);
+                    var student_id=$(this).data('id');
+                    console.log(student_id);
                     $('#modal-default').modal('show')   ;   
-                    $('.modal-title').html("แก้ไขข้อมูลอาจารย์");
-                    postData("service/teacher.php?type=5",{teacher_id:teacher_id}).done(result=>{
+                    $('.modal-title').html("แก้ไขข้อมูลนักเรียน");
+                    postData("service/student/student.php?type=5",{student_id:student_id}).done(result=>{
                       setStudentValue(result.data[0]);
                     })
-                    $('#teacher_id').prop("disabled", true);
+                    $('#student_id').prop("disabled", true);
                     
                 })
                 $('.delete-btn').click(function(){
-                      var teacher_id=$(this).data('id');
+                      var student_id=$(this).data('id');
                       Swal.fire({
                       title: 'คุณต้องการลบข้อมูลนี้ใช่หรือไหม?',
                       text: "ข้อมูลที่ลบแล้วไม่สารถยอนกลับได้!",
@@ -413,7 +391,7 @@
                       cancelButtonText:'ยกเลิก'
                     }).then((result) => {
                       if (result.value) {
-                        postData('service/teacher.php?type=4',{teacher_id:teacher_id}).done((result)=>{
+                        postData('service/student/student.php?type=4',{student_id:student_id}).done((result)=>{
                           if(result.code==1){
                             Swal.fire(
                               'ข้อมูลถูกลยเรียบร้อยแล้ว!',
@@ -465,7 +443,7 @@
           $.validator.setDefaults({
               submitHandler: function () {
                 var data={
-                  teacher_id:$('#teacher_id').val(),
+                  student_id:$('#student_id').val(),
                   first_name:$('#first_name').val(),
                   last_name:$('#last_name').val(),
                   card_id:$("#card_id").val(),
@@ -475,14 +453,13 @@
                   address_no:$('#address_no').val(),
                   address_part:$('#address_part').val(),
                   admin_id:$('#postcode').val(),
-                  structure:$('#structure').val(),
                   img:img
                 }
                 var type=2;
-                if($('#teacher_id').attr('disabled')){
+                if($('#student_id').attr('disabled')){
                   type=3;
                 }
-                postData('service/teacher.php?type='+type,(data)).done((result)=>{
+                postData('service/student/student.php?type='+type,(data)).done((result)=>{
                  if(result.code==1){
                   Swal.fire({
                     position: 'center',
@@ -506,7 +483,7 @@
             });
             $('#quickForm').validate({
               rules: {
-                teacher_id: {
+                student_id: {
                   required: true,
                 },
                 first_name: {
@@ -541,14 +518,14 @@
                 }
               },
               messages: {
-                teacher_id: {
-                  required: "กรุณาระบุรหัสอาจารย์"
+                student_id: {
+                  required: "กรุณาระบุรหัสนักเรียน"
                 },
                 first_name: {
-                  required: "กรุณาระบุชื่ออาจารย์"
+                  required: "กรุณาระบุชื่อนักเรียน"
                   //minlength: "Your password must be at least 5 characters long"
                 },
-                last_name: "กรุณาระบุชื่อสกุลอาจารย์",
+                last_name: "กรุณาระบุชื่อสกุลนักเรียน",
                 card_id: "กรุณาระบุเลขประจำตัวประชาชน",
                 date_of_birth: "กรุณาระบุวัน/เดือน/ปี เกิด",
                 address_no: "กรุณาระบุบ้านเลขที่",
@@ -567,21 +544,8 @@
               }
             // });
           });
-          $('#forgrade').change(function(){
-              $('grade').val('');
-              if($('#forgrade')[0].checked){
-                  $('#grade-panel').show();
-
-              }else{
-                $('#grade-panel').hide();
-              }
-          })
         });
         function setStudentValue(val){
-          if(val.for_grade!='0'){
-            forgrade.checked=true;
-            $("#grade").show();
-          }
           for(var key in val){
             $('#'+key).val(val[key]);
             
