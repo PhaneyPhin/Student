@@ -156,7 +156,7 @@
     });
     var table = $('#subject-table').DataTable({
       "ajax": {
-        "url": "/adminLTE/service/class.php?type=1",
+        "url": service.url+"class.php?type=1",
         "dataSrc": "data"
       },
       "columns": [

@@ -316,7 +316,7 @@
         })
         var table=$('#student-table').DataTable( {
               "ajax": {
-                  "url": "/adminLTE/service/student/student.php?type=1",
+                  "url": service.url+"student/student.php?type=1",
                   "dataSrc": "data"
               },
               "columns": [

@@ -381,7 +381,9 @@
 <script src="plugins/datatables/jquery.dataTables.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <script>
-
+  var service={
+    url:'/student/service/'
+  }
   $(document).ready(function(){
     $('.nav-link').click(function(){
       console.log($(this).data('href'))
@@ -407,7 +409,7 @@
   });
   function postData(url,data){
       return $.ajax({
-            url: '/adminLTE/'+url,
+            url: '/student/'+url,
             type: "post",
             dataType: "json",
             data: data
