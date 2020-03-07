@@ -215,7 +215,7 @@
         {
           width: '20%',
           render: function (data, type, row) {
-            return `<button class="btn btn-warning edit-btn" data-id='` + row['class_id'] + `' data-year='` + row['year'] + `' data-term='` + row['term'] + `' data-grade='`+row['grade']+`'' data-clas_name='`+row['class_name']+`'>แก้ไข</button>`
+            return `<button class="btn btn-warning edit-btn" data-id='` + row['class_id'] + `' data-year='` + row['year'] + `' data-term='` + row['term'] + `' data-grade='`+row['grade']+`'' data-class_name='`+row['class_name']+`'>แก้ไข</button>`
           },
           targets: 6
         }, {
@@ -243,6 +243,7 @@
           $('#term').val(term);
           $('#grade').val(grade);
           $('#class_name').val(class_name);
+         
           $('.modal-title').html("แก้ไขข้อมูลกลุ่มนักเรียน");
 
         })

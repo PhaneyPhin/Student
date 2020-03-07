@@ -3,12 +3,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>วิชา</h1>
+        <h1>ตารางเรียน</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">หน้าแรก</a></li>
-          <li class="breadcrumb-item active">วิชา</li>
+          <li class="breadcrumb-item active">ตารางเรียน</li>
         </ol>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"> <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
-              id="add-subject-btn">เพิ่มวิชา</button></h3>
+              id="add-subject-btn">เพิ่มตารางเรียน</button></h3>
         </div>
         <!-- /.card-header -->
 
@@ -32,9 +32,13 @@
             <thead>
               <tr>
                 <th>ลำดับ</th>
-                <th>รหัสวิชา</th>
                 <th>ชื่อวิชา</th>
-                <th>หน่วยกิต</th>
+                <th>ชื่อกลุ่มนักเรียน</th>
+                <th>ชื่ออาจารย์</th>
+                <th>วัน</th>
+                <th>เวลาเข้าเรียน</th>
+                <th>เวลาออก</th>
+                <th>ห้อง</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
               </tr>
@@ -97,8 +101,6 @@
               </div>
             </div>
 
-            <!-- /.card-body -->
-
             <div class="my-footer">
               <button type="submit" class="btn btn-primary">Submit</button>
               <button type="reset" class="btn btn-primary" id="btn-clear"
@@ -107,9 +109,7 @@
         </form>
       </div>
     </div>
-    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog -->
 </div>
 <style>
   .modal-dialog {
@@ -143,44 +143,45 @@
       "columns": [
 
         { "data": "sub_id" },
-        { "data": "sub_id" },
         { "data": "sub_name" },
-        { "data": "credit" },
-        { "data": "sub_id" },
-        { "data": "sub_id" }
+        { "data": "class_name" },
+        { "data": "teacher_id" },
+        { "data":"day"},
+        { "data":"start_time"},
+        { "data":"end_time"},
+        { "data":"room_number"},
+        { "data": "teaching_id" },
+        { "data": "teaching_id" }
       ],
       "columnDefs": [
         {
-          width: '20%',
+        
           targets: 0,
             "searchable": false,
             "orderable": false,
         },
         {
-          width: '20%',
-
+      
           "targets": 1
         },
         {
-          width: '20%',
+       
           targets: 2
         },
         {
-          width: '20%',
+    
           targets: 3
         },
         {
-          width: '20%',
           render: function (data, type, row) {
             return `<button class="btn btn-warning edit-btn" data-id='` + row['sub_id'] + `' data-sub_name='` + row['sub_name'] + `' data-credit='` + row['credit'] + `'>แก้ไข</button>`
           },
-          targets: 4
+          targets: 8
         }, {
-          width: '20%',
           render: function (data, type, row) {
             return `<button class="btn btn-danger delete-btn"  data-id='` + row['sub_id'] + `'>ลบ</button>`
           },
-          targets: 5
+          targets: 9
         }
       ],
       drawCallback: function (settings) {
@@ -282,9 +283,7 @@
           required: true
         },
         credit: {
-          required: true,
-          max:10,
-          min:0
+          required: true
         },
       },
       messages: {
@@ -295,9 +294,7 @@
           required: "กรุณาระบุชื่อวิชา"
         },
         credit: {
-          required: "กรุณาระบุหน่วยกิต",
-          max:"หน่วยกิตไม่เกิน 10",
-          min:"หน่วยกิตไม่ต่ำกว่า 0"
+          required: "กรุณาระบุหน่วยกิต"
         }
       },
       errorElement: 'span',
