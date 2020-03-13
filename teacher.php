@@ -149,12 +149,10 @@
                         </label>
                         <select class="form-control" style="width: 100%;" name="religion" id="religion" >
                        
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                          <option>ศาสนาพุทธ</option>
+                          <option>อิสลาม</option>
+                          <option>ศาสนาอิสลาม</option>
+                          <option>อื่น ๆ</option>
                         </select>
                       </div>
                     </div>
