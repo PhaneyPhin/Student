@@ -142,6 +142,7 @@
                       <label>รูปภาพ 
                       </label>
                       <div class="input-group">
+                        <img id="image" width="100%"/>
                         <input type="file" name="image_profile" class="custom-file-input" id="exampleInputFile" style="visibility: hidden;">
                         <label class="upload-label" for="exampleInputFile">Choose file</label>
                       </div>
@@ -370,8 +371,10 @@
                     $('.modal-title').html("แก้ไขข้อมูลนักเรียน");
                     postData("service/student/student.php?type=5",{student_id:student_id}).done(result=>{
                       setStudentValue(result.data[0]);
+                      
                     })
                     $('#student_id').prop("disabled", true);
+                    
                     
                 })
                 $('.delete-btn').click(function(){
@@ -395,6 +398,8 @@
                               'success'
                             )
                             table.ajax.reload();
+                            $("#image").attr("src","");
+                            img="";
                           }else{
                             Swal.fire(
                               '',
@@ -543,7 +548,12 @@
         });
         function setStudentValue(val){
           for(var key in val){
+            if(key=="image"){
+              $("#image").attr("src",val[key]);
+            }
+           else{
             $('#'+key).val(val[key]);
+           }
             
           }
           setTimeout(()=>{
@@ -573,9 +583,10 @@
 
             reader.onloadend = function () {
               // Since it contains the Data URI, we should remove the prefix and keep only Base64 string
-              var b64 = reader.result.replace(/^data:.+;base64,/, '');
+              var b64 = reader.result;
               console.log(b64); //-> "R0lGODdhAQABAPAAAP8AAAAAACwAAAAAAQABAAACAkQBADs="
               img=b64;
+              $("#image").attr("src",img);
             };
 
             reader.readAsDataURL(file);

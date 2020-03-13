@@ -22,6 +22,9 @@
             case 5:
                 getTeacherByID();
             break;
+            case 6:
+                update_password();
+            break;
             default:
                 echo "{code:-1,message:'no action here'}";
 
@@ -39,6 +42,7 @@
         // echo $sql;
         echo json_encode(['succes'=>true,'data'=>getOfDB($sql)]);
     }
+    
     function insertTeacher(){
         
        $teacher_id=e($_POST['teacher_id']);
@@ -108,6 +112,26 @@
             echo json_encode([
                 'code'=>-1,
                 'message'=>$sql
+            ]);
+        }
+    }
+    function update_password(){
+        $teacher_id=e($_POST['teacher_id']);
+        $password=e($_POST['password']);
+
+        $sql="update teachers set password=SHA1('$password') where teacher_id='$teacher_id'";
+
+        $result=execute($sql);
+
+        if($result){
+            echo json_encode([
+                'code'=>1,
+                'message'=>'ok'
+            ]);
+        }else{
+            echo json_encode([
+                'code'=>-1,
+                'message'=>"can't update teacher password"
             ]);
         }
     }

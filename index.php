@@ -1,9 +1,27 @@
+<?php
+  session_start();
+  
+  if(isset($_GET['logout'])){
+    $_SESSION['isLogginedIn']=false;
+    $_SESSION['isLoggendTeacher']=false;
+    // session_destroy();
+   
+  }
+  
+  if(!$_SESSION['isLogginedIn']&&!$_SESSION['isLoggendTeacher']){
+    header('Location: ./viewer.php');
+    exit;
+  }
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Student Manage</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -31,6 +49,9 @@
   <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
+  <!-- <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css"> -->
   <style>
     .nav-link{
       cursor: pointer;
@@ -41,21 +62,7 @@
     .modal-content{
            border-radius: 0px;
     }
-/*     
-    .modal-header {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: start;
-        align-items: flex-start;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        padding: 1.5rem;
-        border-bottom: 1px solid #e9ecef;
-        border-top-left-radius: .3rem;
-        border-top-right-radius: .3rem;
-        background: #17a2b8;
-        color: white;
-    } */
+
     .table{
       width:100% !important;
     }
@@ -86,6 +93,9 @@
     .my-footer{
       float:right;
     }
+    .link{
+      cursor:pointer;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -98,118 +108,37 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+      
     </ul>
-
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
+     
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
+          <i class="fas fa-user"></i>
+         
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
+          <span class="dropdown-item dropdown-header"><?=$_SESSION['role']?></span>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            <i class="fas fa-user mr-2"></i><?=$_SESSION['user']?>
+           
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
+          <a href="?logout=1" class="dropdown-item">
+            <i class="fas fa-power-off mr-2"></i> Logout
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+         
         </div>
       </li>
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
           <i class="fas fa-th-large"></i>
         </a>
-      </li>
+      </li> -->
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -217,7 +146,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4 nav-child-indent">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Student Master</span>
@@ -231,7 +160,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?=$_SESSION['user']?></a>
         </div>
       </div>
 
@@ -240,59 +169,52 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+               <li class="nav-item">
+                <a data-href="./dashboard.php" class="nav-link active">
+                  <i class="fas fa-tachometer-alt nav-icon"></i>
+                  <p>หน้าสรุปข้อมูล</p>
+                </a>
+              </li>
+         <?php
+         if($_SESSION['isLogginedIn']){
+         ?>
+           <li class="nav-item has-treeview ">
+            <a class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
               <p>
-                Dashboard
+                ข้อมูลทั่วไป
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a data-href="./dashboard.html" class="nav-link active">
+                <a data-href="./student.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
+                  <p>ข้อมูลนักเรียน</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-href="./teacher.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ข้อมูลอาจารย์</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-href="./subject.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ข้อมูลวิชา</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-href="./room.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ข้อมูลห้องเรียน</p>
                 </a>
               </li>
               
             </ul>
           </li>
-          <li class="nav-item has-treeview ">
-            <a class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                General Data
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a data-href="./student.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Student Data</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a data-href="./teacher.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Teacher Data</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a data-href="./subject.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Subject Data</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a data-href="./room.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Room Data</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+         
          
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -305,7 +227,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a data-href="./study/class.html" class="nav-link">
+                <a data-href="./study/class.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>ข้อมูลกลุ่มนักเรียน</p>
                 </a>
@@ -319,7 +241,97 @@
           
             </ul>
           </li>
+          <?php
+        }
+         ?>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                ดูรายการข้อมูล
+                <i class="fas fa-angle-left right"></i>
+           
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a data-href="./searching/table-study.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ตารางเรียน</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-href="./searching/table-teaching.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ตารางสอน</p>
+                </a>
+              </li>
           
+            </ul>
+          </li>
+          <?php
+            if($_SESSION['isLoggendTeacher']){
+              ?>
+                 <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                ข้อมูลการศึกษา
+                <i class="fas fa-angle-left right"></i>
+           
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a data-href="./study/class.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ข้อมูลกลุ่มนักศึกษา</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-href="./study/view-grade.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ตัดเกรดตามวิชา</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+              <?php
+            }
+          ?>
+         
+          <?php
+            if($_SESSION['isLogginedIn']){
+            ?>
+               <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                จัดการหน้าเว็บ content
+                <i class="fas fa-angle-left right"></i>
+           
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a data-href="./slider.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>รูป slider</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-href="./content.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ข้อมูลเพิ่มเติ่ม</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+            <?php
+            }
+          ?>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -329,14 +341,14 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" id="content-wrapper">
-
+    
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; 2014-2020 <a href="http://adminlte.io">Sudent Master</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.3-pre
+      <b>Version</b> 1.0.0
     </div>
   </footer>
 
@@ -388,6 +400,7 @@
 <script src="plugins/datatables/jquery.dataTables.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <script src="plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- <script src="plugins/summernote/summernote-bs4.min.js"></script> -->
 <script>
   var service={
     url:'/student/service/'
@@ -401,7 +414,7 @@
         $(this).addClass('active')
       }
     })
-    $('#content-wrapper').load('./dashboard.html');
+    $('#content-wrapper').load('./dashboard.php');
     $('.has-treeview').click(function(){
       var menu= $('.has-treeview');
       // menu.removeClass('menu-open');
@@ -426,3 +439,6 @@
 </script>
 </body>
 </html>
+<?php
+  session_write_close();
+?>

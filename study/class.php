@@ -1,4 +1,7 @@
 <!-- Content Header (Page header) -->
+<?php
+  session_start();
+?>
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -22,8 +25,15 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"> <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
+         <?php
+         
+          if($_SESSION['isLogginedIn']){
+            ?>
+             <h3 class="card-title"> <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
               id="add-subject-btn">เพิ่มกลุ่มนักเรียน</button></h3>
+            <?php
+          }
+         ?>
         </div>
         <!-- /.card-header -->
 
@@ -37,8 +47,14 @@
                 <th>ภาคการศึกษา</th>
                 <th>ระดับการศึกษา</th>
                 <th>รายการนักศึกษา</th>
-                <th>แก้ไข</th>
-                <th>ลบ</th>
+                <?php
+                  if($_SESSION['isLogginedIn']){
+                  ?>
+                    <th>แก้ไข</th>
+                    <th>ลบ</th>
+                  <?php
+                  }
+                ?>
               </tr>
             </thead>
 
@@ -78,7 +94,7 @@
                   <label for="exampleInputEmail1"> ปีการศึกษา :</label>
                   <label style="color: red;">*</label>
                   <input type="text" id="year" name="year" class="form-control" id="exampleInputEmail1"
-                    placeholder="ระบุรหัสวิชา">
+                    placeholder="ระบุรปีการศึกษา">
                 </div>
               </div>
               <div class="col-sm-12 col-md-3 col-lg-3">
@@ -166,8 +182,14 @@
         { "data": "term" },
         { "data": "grade" },
         { "data": "class_id" },
-        { "data": "class_id" },
-        { "data": "class_id" }
+       <?php
+        if($_SESSION['isLogginedIn']){
+          echo `
+          { "data": "class_id" },
+          { "data": "class_id" }
+          `;
+        }
+       ?>
       ],
       "columnDefs": [
         {
@@ -205,26 +227,28 @@
             return `<button class="btn btn-info view-btn"  data-id='` + row['class_id'] + `'>แสดง</button>`
           },
           targets: 5
-        }, {
-          width: '20%',
-          render: function (data, type, row) {
-            return `<button class="btn btn-danger delete-btn"  data-id='` + row['class_id'] + `'>ลบ</button>`
-          },
-          targets: 7
         },
-        {
-          width: '20%',
-          render: function (data, type, row) {
-            return `<button class="btn btn-warning edit-btn" data-id='` + row['class_id'] + `' data-year='` + row['year'] + `' data-term='` + row['term'] + `' data-grade='`+row['grade']+`'' data-class_name='`+row['class_name']+`'>แก้ไข</button>`
-          },
-          targets: 6
-        }, {
-          width: '20%',
-          render: function (data, type, row) {
-            return `<button class="btn btn-danger delete-btn"  data-id='` + row['class_id'] + `'>ลบ</button>`
-          },
-          targets: 7
+        
+        <?php
+        if($_SESSION['isLogginedIn']){
+          ?>
+          {
+            width: '20%',
+            render: function (data, type, row) {
+              return `<button class="btn btn-warning edit-btn" data-id='` + row['class_id'] + `' data-year='` + row['year'] + `' data-term='` + row['term'] + `' data-grade='`+row['grade']+`'' data-class_name='`+row['class_name']+`'>แก้ไข</button>`
+            },
+            targets: 6
+          }, {
+            width: '20%',
+            render: function (data, type, row) {
+              return `<button class="btn btn-danger delete-btn"  data-id='` + row['class_id'] + `'>ลบ</button>`
+            },
+            targets: 7
+          }
+          <?php
         }
+       ?>
+        
       ],
       drawCallback: function (settings) {
         $('.edit-btn').click(function () {
@@ -372,3 +396,6 @@
     })
   })
 </script>
+<?php
+  session_write_close();
+?>

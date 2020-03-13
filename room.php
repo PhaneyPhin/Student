@@ -220,7 +220,7 @@
       drawCallback: function (settings) {
         $('.edit-btn').click(function () {
           var room_id = $(this).data('id');
-          var room_number = $(this).data('sub_name');
+          var room_number = $(this).data('room_number');
          
           $('#room_id').prop("disabled", true);
           $('#modal-default').modal('show');
@@ -228,8 +228,8 @@
           // postData("service/subject.php?type=5",{sub_id:sub_id}).done(result=>{
           //   setStudentValue(result.data[0]);
           // })
-          $("#room_id").val(sub_id);
-          $('#room_number').val(sub_name);
+          $("#room_id").val(room_id);
+          $('#room_number').val(room_number);
           $('.modal-title').html("แก้ไขข้อมูลวิชา");
           $('#sub_id').prop("disabled", true);
 

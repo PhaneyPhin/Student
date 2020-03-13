@@ -34,6 +34,7 @@
                 <th>ชื่อ-สกุล</th>
                 <th>เลขประจำตัวประชาชน</th>
                 <th>โครงสร้าง </th>
+                <th>แก้ไขรหัสผ่าน</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
                
@@ -54,8 +55,42 @@
   </section>
   <script src="plugins/datatables/jquery.dataTables.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<div class="modal fade" id="modal-update">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">แก้ไขรหัสผ่าน</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
 
-     <div class="modal fade" id="modal-default">
+          </div>
+          <div class="modal-body">
+              <form role="form" id="update-form">
+                  <div class="row" style="margin-top: 20px;">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                          <div class="form-group">
+                            <label for="update_teacher_id"> รหัสอาจารย์</label>
+                            <input type="text" id="update_teacher_id" name="update_teacher_id" class="form-control"placeholder="ระบุรหัสอาจารย์" disabled>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                          <div class="form-group">
+                            <label for="password"> รหัสผ่าน</label>
+                            <input type="password" id="password" name="password" class="form-control"  placeholder="ระบุรหัสอาจารย์">
+                          </div>
+                        </div>
+                  </div>
+                  <div class="my-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-warning">Reset</button>
+                 </div>
+              </form>
+          </div>
+        </div>
+      </div>
+</div>
+   <div class="modal fade" id="modal-default">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -144,6 +179,8 @@
                       <label>รูปภาพ 
                       </label>
                       <div class="input-group">
+                        
+                        <img id="image" width="100%"/>
                         <input type="file" name="image_profile" class="custom-file-input" id="exampleInputFile" style="visibility: hidden;">
                         <label class="upload-label" for="exampleInputFile">Choose file</label>
                       </div>
@@ -269,6 +306,7 @@
     </style>
     <script>
       var img="";
+      var update_password=false;
       function getProvince(){
         postData("service/locations/location.php?type=1",{}).done((function(result){
           ;
@@ -321,7 +359,8 @@
           $('.modal-title').html('เพิ่มข้อมูลอาจารย์');
           $('#modal-default').modal('show');
             $('#teacher_id').prop("disabled", false);
-            setStudentValue({
+            update_password=false;
+            setTeacherValue({
               teacher_id: "",
             first_name: "",
             last_name: "",
@@ -351,6 +390,7 @@
                 { "data": "first_name" },
                 { "data": "card_id" },
                 { "data": "structure" },
+                {"data":"teacher_id"},
                 { "data": "teacher_id"},
                 { "data": "teacher_id"}
                           ],
@@ -377,25 +417,33 @@
                 {
                   width:'20%',
                   render: function (data,type,row){
-                    return  `<button class="btn btn-warning edit-btn" data-id='`+data+`'>แก้ไข</button>` 
+                    return  `<button class="btn btn-warning update-btn" data-id='`+data+`'>แก้ไขรหัสผ่าน</button>` 
                   },
                   targets: 4
+                },
+                {
+                  width:'20%',
+                  render: function (data,type,row){
+                    return  `<button class="btn btn-warning edit-btn" data-id='`+data+`'>แก้ไข</button>` 
+                  },
+                  targets: 5
                 },{
                   width:'20%',
                   render: function (data,type,row){
                     return  `<button class="btn btn-danger delete-btn"  data-id='`+data+`'>ลบ</button>` 
                   },
-                  targets: 5
+                  targets: 6
                 }
                ],
                drawCallback:function(settings){
                 $('.edit-btn').click(function(){
+                   update_password=false;
                     var teacher_id=$(this).data('id');
                     console.log(teacher_id);
                     $('#modal-default').modal('show')   ;   
                     $('.modal-title').html("แก้ไขข้อมูลอาจารย์");
                     postData("service/teacher.php?type=5",{teacher_id:teacher_id}).done(result=>{
-                      setStudentValue(result.data[0]);
+                      setTeacherValue(result.data[0]);
                     })
                     $('#teacher_id').prop("disabled", true);
                     
@@ -432,6 +480,11 @@
                       }
                     })
                 })
+                $(".update-btn").click(function(){
+                  update_password=true;
+                  $("#modal-update").modal("show");
+                  $("#update_teacher_id").val($(this).data('id'));
+                })
                }
             });
      
@@ -464,7 +517,35 @@
           
           $.validator.setDefaults({
               submitHandler: function () {
-                var data={
+            
+                if(update_password){
+                  var data={
+                    teacher_id:$("#update_teacher_id").val(),
+                    password:$("#password").val()
+                  };
+                  postData('service/teacher.php?type=6',data).done(function(result){
+                    if(result.code==1){
+                          Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'ข้อมูลถูกบันทึกเรียบร้อยแล้ว',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                          table.ajax.reload();
+                          
+                          $('#modal-update').modal('hide')  
+                        }else{
+                          Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title:'error',
+                            text: result.message
+                          })
+                        }
+                      })
+                }else{
+                  var data={
                   teacher_id:$('#teacher_id').val(),
                   first_name:$('#first_name').val(),
                   last_name:$('#last_name').val(),
@@ -502,6 +583,40 @@
                     })
                  }
                 });
+                }
+              }
+            });
+            $('#update-form').validate({
+              rules: {
+                update_teacher_id: {
+                  required: true,
+                },
+                password: {
+                  required: true,
+                  minlength: 6,
+                }
+              },
+              messages: {
+                update_teacher_id: {
+                  required: "กรุณาระบุรหัสอาจารย์"
+                },
+                password: {
+                  required: "กรุณาระบุรหัสผ่าน",
+               
+                  minlength: "รหัสผ่านอย่างน้อย 6 หลัก"
+                }
+             
+              },
+              errorElement: 'span',
+              errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+              },
+              highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+              },
+              unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
               }
             });
             $('#quickForm').validate({
@@ -577,13 +692,16 @@
               }
           })
         });
-        function setStudentValue(val){
+        function setTeacherValue(val){
           if(val.for_grade!='0'){
             forgrade.checked=true;
             $("#grade").show();
           }
           for(var key in val){
             $('#'+key).val(val[key]);
+            if(key=="image"){
+              $("#image").attr("src",val[key]);
+            }
             
           }
           setTimeout(()=>{
@@ -613,8 +731,8 @@
 
             reader.onloadend = function () {
               // Since it contains the Data URI, we should remove the prefix and keep only Base64 string
-              var b64 = reader.result.replace(/^data:.+;base64,/, '');
-              console.log(b64); //-> "R0lGODdhAQABAPAAAP8AAAAAACwAAAAAAQABAAACAkQBADs="
+              var b64 = reader.result;
+              $("#image").attr("src",b64);
               img=b64;
             };
 

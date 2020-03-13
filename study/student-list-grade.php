@@ -15,7 +15,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h3>Student (กลุ่ม <?=$class['class_name']?> ปีการศึกษา <?=$class['year']?> ภาคการศึกษาที่ <?=$class['term']?>)</h3>
+          <h3>วิชา <?=$_GET['sub_name']?> (กลุ่ม <?=$class['class_name']?> ปีการศึกษา <?=$class['year']?> ภาคการศึกษาที่ <?=$class['term']?>)</h3>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -53,12 +53,7 @@
                 <th>ชื่อ-สกุล</th>
                 <th>เลขประจำตัวประชาชน</th>
                 <th>ระดับชั้น </th>
-                <?php
-                   if($_SESSION['isLogginedIn']){
-                   
-                    ?><th>ลบ</th><?php
-                  }
-                ?>
+                <th>แก้ไข grade</th>
                 
                
               </tr>
@@ -147,72 +142,8 @@
       var img="";
       var table;
       var student_demo=null;
-      function getStudent(){
-        $('#student-form').html(`
-                    <label>รหัสนักศึกษา </label>
-                        
-                        <select  multiple="multiple" class="form-control duallistbox" style="width: 100%;" id="student_id" name="student_id">
-                        
-                        </select>
-        `);
-        postData("service/student-list.php?type=7",{year:"<?=$class['year']?>",term:"<?=$class['term']?>"}).done((function(result){
-          ;
-          console.log(result)
-          if(result.success){
-            $('#student_id').html();
-            $('#student_id').html(
-            result.data.map(item=>`<option value="${item.student_id}">${item.student_id}</option>`).join(" ")
-            )
-            postData("service/student-list.php?type=8",{class_id:"<?=$class['class_id']?>"}).done(function(inClassStudent){
-              if(inClassStudent.success){
-                $('#student_id').append(inClassStudent.data.map(item=>`<option selected>${item.student_id}</option>`).join(" "));
-                $('.duallistbox').bootstrapDualListbox();
-              }else{
-                Swal.fire('',inClassStudent.message,'error');
-              }
-            });
-          
-          }else{
-            Swal.fire('',result.message,'error');
-          }
-        }));
-      }
-      function getamphur(){
-        var province=$("#province").val();
-        postData("service/locations/location.php?type=2&province="+province,{}).done((function(result){
-          ;
-          $('#amphur').html();
-          $('#amphur').html(
-            `<option value=""></option>`+
-           result.map(item=>`<option value="${item.amphur_en}">${item.amphur_th}</option>`).join(" ")
-          )
-        }));
-      }
-      function gettambon(){
-        var province=$("#province").val();
-        var amphur=$('#amphur').val();
-        postData("/service/locations/location.php?type=3&province="+province+"&amphur="+amphur,{}).done((function(result){
-          ;
-          $('#tambon').html();
-          $('#tambon').html(
-            `<option value=""></option>`+
-           result.map(item=>`<option value="${item.tambon_en}">${item.tambon_th}</option>`).join(" ")
-          )
-        }));
-      }
-      function getpostcode(){
-        var province=$("#province").val();
-        var amphur=$('#amphur').val();
-        var tambon=$('#tambon').val();
-        postData("/service/locations/location.php?type=4&province="+province+"&amphur="+amphur+"&tambon="+tambon,{}).done((function(result){
-          ;
-          $('#postcode').html();
-          $('#postcode').html(
-            `<option value=""></option>`+
-           result.map(item=>`<option value="${item.admin_id}">${item.postcode}</option>`).join(" ")
-          )
-        }));
-      }
+      var grade_list=[];
+ 
       $(function () {
         // getStudent();
        
@@ -238,10 +169,14 @@
             amphur: "",
             tambon: ""
             })
-        })
+        });
+       
+        postData("service/student-list-grade.php?type=5").done(function(result){
+          grade_list= result.data;
+        });
         table=$('#student-table').DataTable( {
               "ajax": {
-                  "url": service.url+"student-list.php?type=1&class_id=<?=$class['class_id']?>",
+                  "url": service.url+"student-list-grade.php?type=1&class_id=<?=$class['class_id']?>&sub_id=<?=$_GET['sub_id']?>",
                   "dataSrc": "data"
               },
               "columns": [
@@ -249,6 +184,7 @@
                 { "data": "student_id" },
                 { "data": "first_name" },
                 { "data": "card_id" },
+                { "data": "grade" },
                 { "data": "grade" }
            
                           ],
@@ -271,23 +207,46 @@
                 {
                   width:'20%',
                   targets:3
-                }
-                <?php
-                   if($_SESSION['isLogginedIn']){
-                   
-                    ?> ,{
-                      width:'20%',
-                      render: function (data,type,row){
-                        return  `<button class="btn btn-danger delete-btn"  data-student_id='`+row['student_id']+`' data-class_id='`+row['class_id']+`'>ลบ</button>` 
-                      },
-                      targets: 4
-                    }<?php
-                  }
-                ?>
-               
+                },
+                {
+                    width:'20%',
+                    "render": function ( data, type, row ) {
+                        return  `
+                          <select class="grade-select">
+                            <option value=""></option>
+                          `+grade_list.map(item=>{
+                            if(item.id==row['grade_id']){
+                              return `<option value="${JSON.stringify({grade_id:item.id,student_id:row.student_id})}" selected>${item.grade_name}</option>`;
+                            }else{
+                             return  `<option value='${JSON.stringify({grade_id:item.id,student_id:row.student_id})}'>${item.grade_name}</option>`;
+                            }
+                          }).join(" ")
+                          +`</select>
+                        `;
+                    },
+                    "targets": 4
+                },
                ],
                drawCallback:function(settings){
-                
+                $(".grade-select").change(function(){
+                  var selected=JSON.parse($(this).val());
+                  postData("service/student-list-grade.php?type=2",{student_id:selected.student_id,grade_id:selected.grade_id,class_id:"<?=$_GET['class_id']?>",sub_id:"<?=$_GET['sub_id']?>"}).done(function(result){
+                    if(result.code==1){
+                            Swal.fire(
+                              'ข้อมูลถูกบันทึกเรียบร้อยแล้ว!',
+                              '',
+                              'success'
+                            )
+                            table.ajax.reload();
+                          }else{
+                            Swal.fire(
+                              '',
+                              result.message,
+                              'error'
+                            )
+                          }
+                        });
+                })
                 $('.delete-btn').click(function(){
                       var student_id=$(this).data('student_id');
                       var class_id=$(this).data('class_id');
@@ -305,7 +264,7 @@
                         postData('service/student-list.php?type=4',{student_id:student_id,class_id:class_id}).done((result)=>{
                           if(result.code==1){
                             Swal.fire(
-                              'ข้อมูลถูกลยเรียบร้อยแล้ว!',
+                              'ข้อมูลถูกลบเรียบร้อยแล้ว!',
                               '',
                               'success'
                             )
