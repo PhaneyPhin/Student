@@ -20,7 +20,7 @@
                 deleteTeaching();
             break;
             case 5:
-                getTeacherByID();
+                getLastTeaching();
             break;
             default:
                 echo "{code:-1,message:'no action here'}";
@@ -28,6 +28,18 @@
         }
     }else{
         echo "{code:-1,message:'no action here'}";
+    }
+    function getLastTeaching(){
+        $sql="
+        SELECT max(c.year+c.term),c.term,c.year from teaching tc
+        inner join subject s on s.sub_id=tc.sub_id
+        inner join class c on c.class_id=tc.class_id
+        order by start_time
+        ";
+        echo json_encode([
+            'code'=>1,
+            'data'=>getOfDB($sql)
+        ]);
     }
     function searchClass(){
         $year=e($_POST['year']);

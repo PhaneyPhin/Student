@@ -1,4 +1,12 @@
+<?php
+  session_start();
+?>
+
+
+
+
 <!-- Content Header (Page header) -->
+
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -113,10 +121,36 @@
 <script>
   $(function () {
       $("#table-study").hide();
-    
-    postData("service/teacher.php?type=1").done(result=>{
-      $("#teacher_id").html(`<option value=""></option>`+result.data.map(item=>`<option value="${item.teacher_id}">${item.first_name} ${item.last_name}</option>`).join(""))
-    })
+      <?php
+            if( $_SESSION['isLoggendTeacher']){
+              ?>
+      postData("service/searching.php?type=5",{teacher_id:"<?=$_SESSION['username']?>"}).done(result=>{
+        console.log(result);
+        var data=result.data[0];
+        $("#year").val(data.year);
+        $("#term").val(data.term).change();
+        postData("service/teacher.php?type=1").done(result=>{
+       
+              $("#teacher_id").html(`<option value=""></option>`+result.data.map(item=>`<option value="${item.teacher_id}">${item.first_name} ${item.last_name}</option>`).join(""))
+              $("#teacher_id").val("<?=$_SESSION['username']?>").change();
+              $('#quickForm').submit();
+
+            
+      
+        })
+      })
+      <?php
+            }else{
+              ?>
+              postData("service/teacher.php?type=1").done(result=>{
+                
+                      $("#teacher_id").html(`<option value=""></option>`+result.data.map(item=>`<option value="${item.teacher_id}" >${item.first_name} ${item.last_name}</option>`).join(""))
+
+
+                })
+                  <?php
+            }
+          ?>
     $('.select2bs4').select2({
             theme: 'bootstrap4'
     });
