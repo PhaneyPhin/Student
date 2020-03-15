@@ -53,7 +53,7 @@
                 <th>ชื่อ-สกุล</th>
                 <th>เลขประจำตัวประชาชน</th>
                 <th>ระดับชั้น </th>
-                <th>ดูข้อมูลนักศึกษา </th>
+                <th>ดูข้อมูลนักเรียน </th>
                 <th>แก้ไข grade</th>
                 
                
@@ -422,7 +422,7 @@
                 {
                   width:'20%',
                   render:function(data,type,row){
-                    return  `<button class="btn btn-primary view-btn"  data-student_id='`+row['student_id']+`' data-row='`+JSON.stringify(row)+`'>ดูข้อมูลนักศึกษา</button>` 
+                    return  `<button class="btn btn-primary view-btn"  data-student_id='`+row['student_id']+`' data-row='`+JSON.stringify(row)+`'>ดูข้อมูลนักเรียน</button>` 
                   },
                   targets:4
                 },

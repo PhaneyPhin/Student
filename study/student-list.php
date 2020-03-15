@@ -455,7 +455,7 @@
                 },{
                   width:'20%',
                   render:function(data,type,row){
-                    return  `<button class="btn btn-primary view-btn"  data-student_id='`+row['student_id']+`' data-row='`+JSON.stringify(row)+`'>ดูข้อมูลนักศึกษา</button>` 
+                    return  `<button class="btn btn-primary view-btn"  data-student_id='`+row['student_id']+`' data-row='`+JSON.stringify(row)+`'>ดูข้อมูลนักเรียน</button>` 
                   },
                   targets:4
                 }
