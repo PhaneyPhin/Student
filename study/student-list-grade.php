@@ -53,6 +53,7 @@
                 <th>ชื่อ-สกุล</th>
                 <th>เลขประจำตัวประชาชน</th>
                 <th>ระดับชั้น </th>
+                <th>ดูข้อมูลนักศึกษา </th>
                 <th>แก้ไข grade</th>
                 
                
@@ -112,6 +113,167 @@
       </div>
       <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modal-student">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">เพิ่มนักเรียน</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+          <div class="modal-body">
+              <form role="form" id="quickForm">
+                <div class="card-body">
+                  <div class="card-header  mycard-header">
+                    <h3 class="card-title">ข้อมูลนักเรียน</h3>
+                  </div>
+                  <div class="row" style="margin-top: 20px;">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1"> รหัสนักเรียน</label>
+                        <input type="text" id="student_id1" name="student_id" class="form-control" id="exampleInputEmail1" placeholder="ระบุรหัสนักเรียน" disabled>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">ชื่อนักเรียน</label>
+                        <input type="text" id="first_name" name="first_name" class="form-control" id="exampleInputEmail1" placeholder="ระบุชื่อนักเรียน" disabled>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">สกุลนักเรียน</label>
+                        <input type="text" id="last_name" name="last_name" class="form-control" id="exampleInputEmail1" placeholder="ระบุสกุลนักเรียน" disabled>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">เลขประจำตัวประชาชน</label>
+                        <input type="text" id="card_id" name="card_id" class="form-control" id="exampleInputPassword1" placeholder="ระบุเลขประจำตัวประจำชาชน" disabled>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label>วัน/เดือน/ปี เกิด:</label>
+      
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                          </div>
+                          <input type="text" id="date_of_birth" name="date_of_birth"  class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>ศาสนา  
+                        </label>
+                        <select class="form-control" style="width: 100%;" name="religion" id="religion" disabled>
+                       
+                          <option>ศาสนาพุทธ</option>
+                          <option>อิสลาม</option>
+                          <option>ศาสนาอิสลาม</option>
+                          <option>อื่น ๆ</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>ระดับชั้น 
+                        </label>
+                        <select class="form-control" style="width: 100%;" name="grade" id="grade" disabled>
+                          <option value="0"></option>
+                          <option value="1">ป.1</option>
+                          <option value="2">ป.2</option>
+                          <option value="3">ป.3</option>
+                          <option value="4">ป.4</option>
+                          <option value="5">ป.5</option>
+                          <option value="6">ป.6</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                      <label>รูปภาพ 
+                      </label>
+                      <div class="input-group">
+                        <img id="image" width="100%"/>
+                        <input type="file" name="image_profile" class="custom-file-input" id="exampleInputFile" style="visibility: hidden;" disabled>
+                        <label class="upload-label" for="exampleInputFile">Choose file</label>
+                        <img id="image" style="width:100%">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-header mycard-header">
+                    <h3 class="card-title">ที่อยู่</h3>
+                  </div>
+                  <div class="row" style="margin-top: 20px;">
+                    
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>บ้านเลขที่ :</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="address_no" name="address_no" placeholder="ระบุบ้านเลขที่" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>หมู่ที่ :</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control"  id="address_part" name="address_part" placeholder="ระบุหมู่ที่" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>จังหวัด </label>
+                        <select class="form-control select2bs4" style="width: 100%;" id="province" name="province" disabled>
+                        
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>อำเภอ  </label>
+                        <select class="form-control select2bs4" style="width: 100%;" id="amphur" name="amphur" disabled>
+                      
+                        </select>
+                      </div>
+                    </div>
+                   
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>ตำบล   </label>
+                        <select class="form-control select2bs4" style="width: 100%;" name="tambon" id="tambon" disabled>
+                        
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <label>รหัสไปรษณีย์
+                        </label>
+                        <select class="form-control select2bs4" style="width: 100%;" name="postcode" id="postcode" disabled>
+                        
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                 <div class="my-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-warning">Reset</button>
+                 </div>
+              </form>
+            
+          </div>
+        
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
     <style>
 
       .modal-dialog{
@@ -143,10 +305,58 @@
       var table;
       var student_demo=null;
       var grade_list=[];
- 
+      function getProvince(){
+        postData("service/locations/location.php?type=1",{}).done((function(result){
+          ;
+          $('#province').html();
+          $('#province').html(
+            `<option value=""></option>`+
+           result.map(item=>`<option value="${item.province_en}">${item.province_th}</option>`).join(" ")
+          )
+        }));
+      }
+      function getamphur(){
+        var province=$("#province").val();
+        postData("service/locations/location.php?type=2&province="+province,{}).done((function(result){
+          ;
+          $('#amphur').html();
+          $('#amphur').html(
+            `<option value=""></option>`+
+           result.map(item=>`<option value="${item.amphur_en}">${item.amphur_th}</option>`).join(" ")
+          )
+        }));
+      }
+      function gettambon(){
+        var province=$("#province").val();
+        var amphur=$('#amphur').val();
+        postData("/service/locations/location.php?type=3&province="+province+"&amphur="+amphur,{}).done((function(result){
+          ;
+          $('#tambon').html();
+          $('#tambon').html(
+            `<option value=""></option>`+
+           result.map(item=>`<option value="${item.tambon_en}">${item.tambon_th}</option>`).join(" ")
+          )
+        }));
+      }
+      function getpostcode(){
+        var province=$("#province").val();
+        var amphur=$('#amphur').val();
+        var tambon=$('#tambon').val();
+        postData("/service/locations/location.php?type=4&province="+province+"&amphur="+amphur+"&tambon="+tambon,{}).done((function(result){
+          ;
+          $('#postcode').html();
+          $('#postcode').html(
+            `<option value=""></option>`+
+           result.map(item=>`<option value="${item.admin_id}">${item.postcode}</option>`).join(" ")
+          )
+        }));
+      }
       $(function () {
         // getStudent();
-       
+        getProvince();
+         $("#province").change(getamphur)
+         $("#amphur").change(gettambon);
+         $('#tambon').change(getpostcode)
         $('#addStudent').click(function(){
           $('.modal-title').html('เพิ่มข้อมูลนักเรียน');
           getStudent();
@@ -185,6 +395,7 @@
                 { "data": "first_name" },
                 { "data": "card_id" },
                 { "data": "grade" },
+                { "data": "student_id" },
                 { "data": "grade" }
            
                           ],
@@ -209,6 +420,13 @@
                   targets:3
                 },
                 {
+                  width:'20%',
+                  render:function(data,type,row){
+                    return  `<button class="btn btn-primary view-btn"  data-student_id='`+row['student_id']+`' data-row='`+JSON.stringify(row)+`'>ดูข้อมูลนักศึกษา</button>` 
+                  },
+                  targets:4
+                },
+                {
                     width:'20%',
                     "render": function ( data, type, row ) {
                         return  `
@@ -224,10 +442,21 @@
                           +`</select>
                         `;
                     },
-                    "targets": 4
+                    "targets": 5
                 },
                ],
                drawCallback:function(settings){
+                $(".view-btn").click(function(){
+                  var row=$(this).data(row);
+                  console.log(row);;
+
+                  $("#modal-student").modal("show");
+                  postData("service/student/student.php?type=5",{student_id:row.student_id}).done(result=>{
+                      result.data[0].student_id1=result.data[0].student_id;
+                      setStudentValue(result.data[0]);
+                      
+                    })
+                })
                 $(".grade-select").change(function(){
                   var selected=JSON.parse($(this).val());
                   postData("service/student-list-grade.php?type=2",{student_id:selected.student_id,grade_id:selected.grade_id,class_id:"<?=$_GET['class_id']?>",sub_id:"<?=$_GET['sub_id']?>"}).done(function(result){
@@ -307,7 +536,11 @@
         });
         function setStudentValue(val){
           for(var key in val){
-            $('#'+key).val(val[key]);
+            if(key=="image"){
+              $("#image").attr("src",val[key]);
+            }else{
+              $('#'+key).val(val[key]);
+            }
             
           }
           setTimeout(()=>{

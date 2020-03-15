@@ -33,6 +33,7 @@
         $teacher_id=e($_GET['teacher_id']);
         $sql="SELECT distinct c.*,s.* from class c inner join teaching t on t.class_id=c.class_id
             inner join subject s on s.sub_id=t.sub_id
+            where t.teacher_id='$teacher_id'
             ";
         echo json_encode(['succes'=>true,'data'=>getOfDB($sql)]);
     }

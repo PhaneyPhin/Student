@@ -183,7 +183,7 @@
                 $('#credit').val('');
                 $('#sub_id').prop("disabled", false);
                 $('#modal-default').modal('show');
-                $('.modal-title').html("เพิ่มรูป slider");
+                $('.modal-title').html("เพิ่ม content");
             });
             var table = $('#subject-table').DataTable({
                 "ajax": {
@@ -292,6 +292,7 @@
                         $("#image").attr("src",row.image);
                         img=row.image;
                         $(".note-editable.card-block").html(row.data_html);
+                        $('.modal-title').html("แก้ไข content");
                         $("#image").show();
                     });
                 }
