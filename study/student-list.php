@@ -424,7 +424,7 @@
                 { "data": "student_id" },
                 { "data": "first_name" },
                 { "data": "card_id" },
-                { "data": "student_id" },
+                { "data": "grade" },
                 <?php
                  if($_SESSION['isLogginedIn']){
                 ?>
@@ -451,7 +451,8 @@
                 },
                 {
                   width:'20%',
-                  targets:3
+                  targets:3,
+                  render:function(data,type,row){return "ป."+data;}
                 },{
                   width:'20%',
                   render:function(data,type,row){
