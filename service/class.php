@@ -1,5 +1,6 @@
 <?php
     include('./connections/connect.php');
+    session_start();
     if($_SERVER['REQUEST_METHOD'] === 'POST' || true){
         $type=1;
         if($_GET['type']){
@@ -30,7 +31,16 @@
         echo "{code:-1,message:'no action here'}";
     }
     function getClass(){
-        $sql="SELECT * from class";
+      
+        if($_SESSION['isLoggendTeacher']){
+            $sql="SELECT c.* from class c
+                    inner join teaching t on c.class_id=t.class_id
+                    where t.teacher_id='".$_SESSION['username']."'
+                ";
+        }else{
+            $sql="SELECT * from class 
+                ";
+        }
         echo json_encode(['succes'=>true,'data'=>getOfDB($sql)]);
     }
     function getClassByID(){
@@ -94,4 +104,5 @@
             ]);
         }
     }
+    session_write_close();
 ?>
