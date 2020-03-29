@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Student Master</title>
+    <title>JYI</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -22,9 +22,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <style>
 
     .bx-wrapper img {
-			width: 100%;
-			display: block;
-		}
+            width: 100%;
+            display: block;
+        }
     </style>
 </head>
 
@@ -35,8 +35,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="index.php" class="navbar-brand">
-                    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">Student Master</span>
+                    <img src="dist/img/jyilogo.png" alt="jyilogo Logo" class="brand-image img-circle elevation-3" style="opacity:.8"> 
+
+                
+                  <span class="#"> โรงเรียนจริยอิสลามศึกษาอนุสรณ์ </span>
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,8 +55,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <!-- Messages Dropdown Menu -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="login.php">
-                            Login
+                        <a href="login.php" class="navbar-brand">
+                         <img src="dist/img/lg01.png" alt="lg01 Logo" class="#" style="opacity:.8">  
+
+                  <!--      <a class="brand-text fonts brand-image" href="login.php"> -->
+                          <!--  Login  -->
                         </a>
 
                     </li>
@@ -169,10 +174,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-                Anything you want
+                
+       โรงเรียนจริยอิสลามอนุสรณ์ ต. บ่อทอง  อ. หนองจิก จ. ปัตตานี
+
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2019-2020 <a href="https://adminlte.io">JYI</a>.</strong> All rights reserved.
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -187,15 +194,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="dist/js/adminlte.min.js"></script>
     <script src="dist/js/jquery.bxslider.min.js"></script>
     <script>
-				$(function(){
-					$('.bxslider').bxSlider({
-						auto: true,
-						autoControls: true,
-						stopAutoOnClick: true,
-						pager: true,
-					});
-					});
-			</script>
+                $(function(){
+                    $('.bxslider').bxSlider({
+                        auto: true,
+                        autoControls: true,
+                        stopAutoOnClick: true,
+                        pager: true,
+                    });
+                    });
+            </script>
 </body>
 
 </html>

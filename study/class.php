@@ -184,10 +184,10 @@
         { "data": "class_id" },
        <?php
         if($_SESSION['isLogginedIn']){
-          echo `
+          echo '
           { "data": "class_id" },
           { "data": "class_id" }
-          `;
+          ';
         }
        ?>
       ],

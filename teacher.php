@@ -150,7 +150,6 @@
                         <select class="form-control" style="width: 100%;" name="religion" id="religion" >
                        
                           <option>ศาสนาพุทธ</option>
-                          <option>อิสลาม</option>
                           <option>ศาสนาอิสลาม</option>
                           <option>อื่น ๆ</option>
                         </select>
@@ -168,7 +167,8 @@
                             <option>ฝ่ายวิชาการ</option>
                             <option>ฝ่ายงบประมาณ</option>
                             <option>ฝ่ายบริหารงานทั่วไป</option>
-                            <option>ฝ่ายบุคคล</option>
+                            <option>ครู</option>
+                            
                           </select>
                         </div>
                       </div>
@@ -584,6 +584,17 @@
                 }
               }
             });
+            $.validator.addMethod(
+                    'strong_password',
+                    function (value, element, requiredValue) {
+                    
+                      return  /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value)
+                          && /[a-z]/.test(value) // has a lowercase letter
+                          && /[A-Z]/.test(value) // has a lowercase letter
+                          && /\d/.test(value) // has a digit
+                    },
+                    'password is too weak'
+                );
             $('#update-form').validate({
               rules: {
                 update_teacher_id: {
@@ -592,6 +603,7 @@
                 password: {
                   required: true,
                   minlength: 6,
+                  strong_password:true
                 }
               },
               messages: {
@@ -691,9 +703,11 @@
           })
         });
         function setTeacherValue(val){
+          console.table(val);
           if(val.for_grade!='0'){
             forgrade.checked=true;
-            $("#grade").show();
+            $("#grade-panel").show();
+            $("#grade").val(val.for_grade).change();
           }
           for(var key in val){
             $('#'+key).val(val[key]);

@@ -115,7 +115,6 @@
                         <select class="form-control" style="width: 100%;" name="religion" id="religion" >
                        
                           <option>ศาสนาพุทธ</option>
-                          <option>อิสลาม</option>
                           <option>ศาสนาอิสลาม</option>
                           <option>อื่น ๆ</option>
                         </select>

@@ -30,7 +30,7 @@
         echo "{code:-1,message:'no action here'}";
     }
     function getStudent(){
-        $sql="SELECT * from students";
+        $sql="SELECT s.student_id,s.first_name,s.last_name,s.card_id,s.grade from students s";
         echo json_encode(['succes'=>true,'data'=>getOfDB($sql)]);
     }
     function getStudentByID(){

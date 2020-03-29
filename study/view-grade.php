@@ -275,7 +275,10 @@
         $('.view-btn').click(function(){
             var class_id=$(this).data('id');
             var row=$(this).data('row');
-            $('#content-wrapper').load('./study/student-list-grade.php?class_id='+class_id+'&sub_id='+row.sub_id+"&sub_name="+row.sub_name);
+         
+            console.table(`./study/student-list-grade.php?class_id=${class_id}&sub_id=${row.sub_id}&sub_name=${row.sub_name}`);
+            
+            $('#content-wrapper').load(encodeURI(`./study/student-list-grade.php?class_id=${class_id}&sub_id=${row.sub_id}&sub_name=${row.sub_name}`));
         })
       }
     });

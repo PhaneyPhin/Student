@@ -21,7 +21,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Student Manage</title>
+  <title>jyi</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -45,8 +45,7 @@
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
@@ -56,8 +55,7 @@
     .nav-link{
       cursor: pointer;
     }
-    *{
-      font-family: 'Kanit', sans-serif;
+    *{font-family: 'Sarabun', sans-serif;
     }
     .modal-content{
            border-radius: 0px;
@@ -147,9 +145,9 @@
   <aside class="main-sidebar sidebar-light-primary elevation-4 nav-child-indent">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src="dist/img/jyilogo.png" alt="jyilogo Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Student Master</span>
+      <span class="brand-text font-weight-light">JYI</span>
     </a>
 
     <!-- Sidebar -->
@@ -160,7 +158,7 @@
           <?php
             if($_SESSION['isLogginedIn']){
             ?>
-             <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+             <img src="dist/img/jyi.png" class="img-circle elevation-2" alt="User Image">
             <?php
             }
             else{
@@ -298,13 +296,18 @@
            
               </p>
             </a>
+
+          
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a data-href="./study/class.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>ข้อมูลกลุ่มนักศึกษา</p>
                 </a>
-              </li>
+              </li>  
+
+            
+
               <li class="nav-item">
                 <a data-href="./study/view-grade.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -362,7 +365,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2020 <a href="http://adminlte.io">Sudent Master</a>.</strong>
+    <strong>Copyright &copy; 2019-2020 <a href="http://adminlte.io">JYI</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0
@@ -420,7 +423,7 @@
 <!-- <script src="plugins/summernote/summernote-bs4.min.js"></script> -->
 <script>
   var service={
-    url:'/student/service/'
+    url:'http://jiss.projects.ftu.ac.th/service/'
   }
   $(document).ready(function(){
     $('.nav-link').click(function(){
@@ -450,7 +453,7 @@
   });
   function postData(url,data){
       return $.ajax({
-            url: '/student/'+url,
+            url: 'http://jiss.projects.ftu.ac.th/'+url,
             type: "post",
             dataType: "json",
             data: data

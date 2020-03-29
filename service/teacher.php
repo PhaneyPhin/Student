@@ -33,7 +33,7 @@
         echo "{code:-1,message:'no action here'}";
     }
     function getTeacher(){
-        $sql="SELECT * from teachers";
+        $sql="SELECT t.teacher_id,t.first_name,t.last_name,t.card_id,t.structure from teachers t";
         echo json_encode(['succes'=>true,'data'=>getOfDB($sql)]);
     }
     function getTeacherByID(){
@@ -85,7 +85,7 @@
        $image=e($_POST['img']);
        $religion=e($_POST['religion']);
        $structure=e($_POST['structure']);
-       $sql="update teachers set first_name='$first_name',last_name='$last_name',card_id='$card_id',date_of_birth='$date_of_birth',address_no='$admin_id',address_part='$address_part',admin_id='$admin_id',for_grade='$for_grade',image='$image',religion='$religion' where teacher_id='$teacher_id'" ;
+       $sql="update teachers set first_name='$first_name',last_name='$last_name',card_id='$card_id',date_of_birth='$date_of_birth',address_no='$admin_id',address_part='$address_part',admin_id='$admin_id',for_grade='$for_grade',image='$image',religion='$religion',structure='$structure' where teacher_id='$teacher_id'" ;
        $result=execute($sql);
        if($result){
            echo json_encode([

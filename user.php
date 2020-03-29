@@ -307,6 +307,17 @@
         });
       }
     })
+    $.validator.addMethod(
+        'strong_password',
+        function (value, element, requiredValue) {
+        
+          return  /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value)
+              && /[a-z]/.test(value) // has a lowercase letter
+              && /[A-Z]/.test(value) // has a lowercase letter
+              && /\d/.test(value) // has a digit
+        },
+        'password is too weak'
+    );
     $('#quickForm').validate({
       rules: {
         username: {
@@ -328,6 +339,11 @@
         last_name: {
           required: true
         },
+        password:{
+          required: true,
+          minlength:6,
+          strong_password:true
+        }
       },
       messages: {
         username: {
@@ -339,6 +355,10 @@
         },
         last_name: {
           required: "กรุณาระบุสกุล"
+        },
+        password:{
+          required:"กรุณากรอกรหัสผ่าน",
+          minlength:"รหัสผ่านอย่างน้อยมี 6 ตัวอักษร"
         }
       },
       errorElement: 'span',

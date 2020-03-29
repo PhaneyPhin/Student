@@ -4,6 +4,7 @@
     $class_id=$_GET['class_id'];
     $sql="select * from class where class_id='$class_id'";
     $class=getOfDB($sql);
+    // echo $class_id;
     if(count($class)>0){
       $class=$class[0];
     }

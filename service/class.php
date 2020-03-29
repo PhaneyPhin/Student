@@ -33,7 +33,7 @@
     function getClass(){
       
         if($_SESSION['isLoggendTeacher']){
-            $sql="SELECT c.* from class c
+            $sql="SELECT distinct c.* from class c
                     inner join teaching t on c.class_id=t.class_id
                     where t.teacher_id='".$_SESSION['username']."'
                 ";
